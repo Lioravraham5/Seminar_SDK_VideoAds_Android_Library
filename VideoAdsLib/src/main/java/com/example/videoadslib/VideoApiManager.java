@@ -45,7 +45,48 @@ public class VideoApiManager {
 
             @Override
             public void onFailure(Call<VideoAd> call, Throwable throwable) {
+                Log.d("VideoApiManager", "Error: " + throwable.getMessage());
                 adFetchedCallback.onFailureFetching(throwable.getMessage());
+            }
+        });
+    }
+
+    public void addAdEvent(String packageName, AdEvent adEvent){
+        Call<Void> call = getVideoAdApi().addAdEvent(packageName, adEvent);
+        call.enqueue(new Callback<Void>() {
+            @Override
+            public void onResponse(Call<Void> call, Response<Void> response) {
+                if(response.code() == SUCCESS_CODE){
+                    Log.d("VideoApiManager", "Ad event added successfully");
+                }
+                else {
+                    Log.d("VideoApiManager", "Error adding ad event: " + response.message());
+                }
+            }
+
+            @Override
+            public void onFailure(Call<Void> call, Throwable throwable) {
+                Log.d("VideoApiManager", "Error: " + throwable.getMessage());
+            }
+        });
+    }
+
+    public void createPackage(String packageName){
+        Call<Void> call = getVideoAdApi().createPackage(packageName);
+        call.enqueue(new Callback<Void>() {
+            @Override
+            public void onResponse(Call<Void> call, Response<Void> response) {
+                if(response.code() == SUCCESS_CODE){
+                    Log.d("VideoApiManager", "Package created successfully");
+                }
+                else {
+                    Log.d("VideoApiManager", "Error creating package: " + response.message());
+                }
+            }
+
+            @Override
+            public void onFailure(Call<Void> call, Throwable throwable) {
+                Log.d("VideoApiManager", "Error: " + throwable.getMessage());
             }
         });
     }

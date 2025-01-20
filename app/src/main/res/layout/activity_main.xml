@@ -7,19 +7,11 @@
     android:layout_height="match_parent"
     tools:context=".MainActivity">
 
-    <!-- Fragment container where the ad fragment will be placed -->
-    <FrameLayout
-        android:id="@+id/fragment_container"
-        android:layout_width="match_parent"
-        android:layout_height="550dp" />
-
-
     <com.google.android.material.button.MaterialButton
         android:id="@+id/load_ad_button"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_centerHorizontal="true"
-        android:text="load ad"
-        android:layout_below="@id/fragment_container"/>
+        android:layout_centerInParent="true"
+        android:text="load ad"/>
 
 </RelativeLayout>

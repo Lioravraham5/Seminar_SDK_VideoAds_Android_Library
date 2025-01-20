@@ -4,6 +4,9 @@ import com.google.gson.annotations.SerializedName;
 
 public class VideoAd {
 
+    @SerializedName("_id")
+    private String id;
+
     @SerializedName("video_link")
     private String videoLink; // URL to the video
 
@@ -17,10 +20,20 @@ public class VideoAd {
 
     }
 
-    public VideoAd(String videoLink, String advertiserLink, String advertiserIcon) {
+    public VideoAd(String id,String videoLink, String advertiserLink, String advertiserIcon) {
+        this.id = id;
         this.videoLink = videoLink;
         this.advertiserLink = advertiserLink;
         this.advertiserIcon = advertiserIcon;
+    }
+
+    public String getId() {
+        return id;
+    }
+
+    public VideoAd setId(String id) {
+        this.id = id;
+        return this;
     }
 
     public String getVideoLink() {
@@ -53,7 +66,8 @@ public class VideoAd {
     @Override
     public String toString() {
         return "VideoAd{" +
-                "videoLink='" + videoLink + '\'' +
+                "id='" + id + '\'' +
+                ", videoLink='" + videoLink + '\'' +
                 ", advertiserLink='" + advertiserLink + '\'' +
                 ", advertiserIcon='" + advertiserIcon + '\'' +
                 '}';

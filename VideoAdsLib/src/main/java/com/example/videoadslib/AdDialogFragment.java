@@ -1,5 +1,6 @@
 package com.example.videoadslib;
 
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
@@ -14,7 +15,7 @@ import android.widget.ImageButton;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.core.content.ContextCompat;
-import androidx.fragment.app.Fragment;
+import androidx.fragment.app.DialogFragment;
 import androidx.media3.common.Player;
 import androidx.media3.ui.PlayerView;
 import android.net.Uri;
@@ -27,27 +28,43 @@ import com.bumptech.glide.request.target.Target;
 import com.google.android.material.button.MaterialButton;
 import com.google.android.material.imageview.ShapeableImageView;
 
-public class AdFragment extends Fragment {
-    private static final int CLOSE_BUTTON_DELAY = 5000; // 5 seconds
-
+public class AdDialogFragment extends DialogFragment {
     private VideoApiManager videoApiManager;
     private VideoPlayer videoPlayer;
     private VideoAd currentAd;
+    private boolean isClicked = false; // Flag to check if the video has been clicked
 
     private PlayerView video_container;
     private ImageButton close_button;
     private MaterialButton redirect_button;
     private ShapeableImageView logo_image;
 
+    // callback for the ad closed event for the host app:
+    private AdClosedCallback adClosedCallback;
+    private int closeButtonDelay = 5000; // default 5 seconds
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.ad_fragment, container, false);
 
         findViews(view);
+
+        // Initialize the VideoApiManager
+        videoApiManager = new VideoApiManager();
+
         fetchAdFromServer();
         return view;
 
+    }
+
+    @Override
+    public void onStart() {
+        super.onStart();
+        // Get the current dialog window
+        if (getDialog() != null && getDialog().getWindow() != null) {
+            // Set the dialog window to match the parent (activity) size
+            getDialog().getWindow().setLayout(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT);
+        }
     }
 
     @Override
@@ -58,7 +75,7 @@ public class AdFragment extends Fragment {
             if (videoPlayer.getPlayer().getPlaybackState() == Player.STATE_READY) {
                 // Resume playback
                 videoPlayer.getPlayer().play();
-                Log.d("AdFragment", "Video resumed in onResume");
+                Log.d("AdDialogFragment", "Video resumed in onResume");
             }
         }
     }
@@ -68,7 +85,7 @@ public class AdFragment extends Fragment {
         super.onPause();
         if (videoPlayer != null && videoPlayer.getPlayer() != null) {
             videoPlayer.getPlayer().pause(); // Pause the video
-            Log.d("AdFragment", "Video paused in onPause");
+            Log.d("AdDialogFragment", "Video paused in onPause");
         }
     }
 
@@ -77,24 +94,31 @@ public class AdFragment extends Fragment {
         super.onDestroyView();
         if (videoPlayer != null) {
             videoPlayer.releasePlayer(); // Release player resources
-            Log.d("AdFragment", "Video player released in onDestroyView");
+            Log.d("AdDialogFragment", "Video player released in onDestroyView");
+        }
+    }
+
+    @Override
+    public void onDismiss(@NonNull DialogInterface dialog) {
+        super.onDismiss(dialog);
+        if (adClosedCallback != null) {
+            adClosedCallback.onAdClosed();
         }
     }
 
     private void fetchAdFromServer() {
-        videoApiManager = new VideoApiManager();
         videoApiManager.fetchAd(new VideoApiManager.AdFetchedCallback() {
             @Override
             public void onSuccessFetching(VideoAd ad) {
                 currentAd = ad;
-                Log.d("AdFragment", "Fetched ad: " + ad.toString());
+                Log.d("AdDialogFragment", "Fetched ad: " + ad.toString());
                 playAdVideo();
             }
 
             @Override
             public void onFailureFetching(String errorMessage) {
                 // Handle error
-                Log.d("AdFragment", "Error fetching ad: " + errorMessage);
+                Log.d("AdDialogFragment", "Error fetching ad: " + errorMessage);
             }
         });
 
@@ -112,12 +136,10 @@ public class AdFragment extends Fragment {
             video_container.setPlayer(videoPlayer.getPlayer());
             videoPlayer.play();
 
-            // optional: mute the video
-            //videoPlayer.mute();
-
             // Set up video click listener to redirect to advertiser link
             video_container.setOnClickListener(v -> {
                 if (currentAd.getAdvertiserLink() != null){
+                    isClicked = true;
                     openAdvertiserLink(currentAd.getAdvertiserLink());
                 }
             });
@@ -160,7 +182,7 @@ public class AdFragment extends Fragment {
                         .listener(new RequestListener<Drawable>() {
                             @Override
                             public boolean onLoadFailed(@Nullable GlideException e, @Nullable Object model, @NonNull Target<Drawable> target, boolean isFirstResource) {
-                                sutUpRedirectButton();
+                                setUpRedirectButton();
                                 return false;
                             }
 
@@ -168,7 +190,7 @@ public class AdFragment extends Fragment {
                             public boolean onResourceReady(@NonNull Drawable resource, @NonNull Object model, Target<Drawable> target, @NonNull DataSource dataSource, boolean isFirstResource) {
                                 // When image is loaded, show the button
                                 logo_image.setVisibility(View.VISIBLE);
-                                sutUpRedirectButton();
+                                setUpRedirectButton();
                                 return false; // Return false to allow Glide to handle the resourc
                             }
                         })
@@ -177,15 +199,29 @@ public class AdFragment extends Fragment {
 
             // If no logo image is available, show the redirect button
             else {
-                sutUpRedirectButton();
+                setUpRedirectButton();
             }
         }
     }
 
-    private void sutUpRedirectButton(){
+    private void addAdEventToServer() {
+        if(currentAd != null){
+            AdEvent adEvent = new AdEvent(currentAd.getId(), isClicked);
+            String packageName = requireContext().getPackageName();
+            Log.d("AdDialogFragment", "Package name: " + packageName);
+            videoApiManager.addAdEvent(packageName, adEvent);
+            Log.d("AdDialogFragment", "AdEvent sent: " + adEvent.toString());
+        }
+        else {
+            Log.d("AdDialogFragment", "AdEvent not sent: Ad is null.");
+        }
+    }
+
+    private void setUpRedirectButton(){
         redirect_button.setVisibility(View.VISIBLE);
         redirect_button.setOnClickListener(v -> {
             if (currentAd.getAdvertiserLink() != null){
+                isClicked = true;
                 openAdvertiserLink(currentAd.getAdvertiserLink());
             }
         });
@@ -203,16 +239,19 @@ public class AdFragment extends Fragment {
 
     private void showCloseButtonWithDelay() {
         // Show close button with delay
-        new Handler().postDelayed(() -> close_button.setVisibility(View.VISIBLE), CLOSE_BUTTON_DELAY);
+        new Handler().postDelayed(() -> close_button.setVisibility(View.VISIBLE), closeButtonDelay);
 
         close_button.setOnClickListener(v -> {
-            Log.d("AdFragment", "Close button clicked");
+            Log.d("AdDialogFragment", "Close button clicked");
             if (videoPlayer != null) {
                 videoPlayer.releasePlayer();
-                Log.d("AdFragment", "Video player released");
+                Log.d("AdDialogFragment", "Video player released");
             }
-            requireActivity().getSupportFragmentManager().beginTransaction().remove(AdFragment.this).commit();
 
+            // Send ad event to server
+            addAdEventToServer();
+
+            dismiss();
         });
     }
 
@@ -221,5 +260,14 @@ public class AdFragment extends Fragment {
         close_button = view.findViewById(R.id.close_button);
         redirect_button = view.findViewById(R.id.redirect_button);
         logo_image = view.findViewById(R.id.logo_image);
+    }
+
+    public void setCloseButtonDelay(int delayMillis) {
+        this.closeButtonDelay = delayMillis;
+    }
+
+    // Method to set the callback listener
+    public void setAdClosedCallback(AdClosedCallback adClosedCallback) {
+        this.adClosedCallback = adClosedCallback;
     }
 }
