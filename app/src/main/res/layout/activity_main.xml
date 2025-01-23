@@ -5,13 +5,27 @@
     android:id="@+id/main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="#C3FDFF"
     tools:context=".MainActivity">
 
+    <!-- Activity 1 -->
+    <com.google.android.material.textview.MaterialTextView
+        android:id="@+id/activity_1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Activity 1"
+        android:textSize="48dp"
+        android:textStyle="bold"
+        android:layout_marginTop="100dp"
+        android:layout_centerHorizontal="true"/>
+
+    <!-- Button to open new activity -->
     <com.google.android.material.button.MaterialButton
-        android:id="@+id/load_ad_button"
+        android:id="@+id/open_activity_button"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_centerInParent="true"
-        android:text="load ad"/>
+        android:backgroundTint="#004ECB"
+        android:text="Open New Activity"/>
 
 </RelativeLayout>

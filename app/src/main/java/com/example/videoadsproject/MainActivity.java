@@ -1,24 +1,23 @@
 package com.example.videoadsproject;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.window.OnBackInvokedDispatcher;
 
 import androidx.activity.EdgeToEdge;
-import androidx.activity.OnBackPressedDispatcher;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 
-import com.example.videoadslib.AdDialogFragment;
 import com.example.videoadslib.VideoAdsManager;
 import com.google.android.material.button.MaterialButton;
 
 public class MainActivity extends AppCompatActivity {
 
-    private MaterialButton load_ad_button;
+    private MaterialButton open_activity_button;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -31,19 +30,18 @@ public class MainActivity extends AppCompatActivity {
             return insets;
         });
 
-
-
-
-        VideoAdsManager videoAdsManager = new VideoAdsManager(getPackageName());
-        videoAdsManager.setCloseButtonDelay(9000); // 9 seconds
-        videoAdsManager.setAdClosedCallback(() -> {
-            // your code here
-            Log.d("MainActivity", "Ad closed");
-        });
-        load_ad_button = findViewById(R.id.load_ad_button);
-        load_ad_button.setOnClickListener(v -> videoAdsManager.startVideoAd(getSupportFragmentManager()));
+        findViews();
+        open_activity_button.setOnClickListener(v -> openNewActivity());
     }
 
+    private void openNewActivity() {
+        Intent intent = new Intent(this, SecondActivity.class);
+        startActivity(intent);
+    }
+
+    private void findViews() {
+        open_activity_button = findViewById(R.id.open_activity_button);
+    }
 
 
     @NonNull

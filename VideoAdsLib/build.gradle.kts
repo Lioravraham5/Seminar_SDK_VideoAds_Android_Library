@@ -1,11 +1,11 @@
 plugins {
     alias(libs.plugins.android.library)
-    //alias(libs.plugins.maven.publish) // Apply the maven-publish plugin
+    alias(libs.plugins.maven.publish) // Apply the maven-publish plugin
 }
 
 android {
     namespace = "com.example.videoadslib"
-    compileSdk = 34
+    compileSdk = 35
 
     defaultConfig {
         minSdk = 26
@@ -26,6 +26,40 @@ android {
     compileOptions {
         sourceCompatibility = JavaVersion.VERSION_11
         targetCompatibility = JavaVersion.VERSION_11
+    }
+}
+
+afterEvaluate {
+    publishing {
+        publications {
+            create<MavenPublication>("release") {
+                groupId = "com.example.videoadslibe" // library package name
+                artifactId = "VideoAdsLib" // library name
+                version = "1.0.0" // library version
+                artifact(tasks.getByName("bundleReleaseAar"))
+
+                pom {
+                    withXml {
+                        val dependenciesNode = asNode().appendNode("dependencies")
+                        configurations.api.get().dependencies.forEach { dependency ->
+                            val dependencyNode = dependenciesNode.appendNode("dependency")
+                            dependencyNode.appendNode("groupId", dependency.group)
+                            dependencyNode.appendNode("artifactId", dependency.name)
+                            dependencyNode.appendNode("version", dependency.version)
+                            dependencyNode.appendNode("scope", "compile")
+                        }
+                        configurations.implementation.get().dependencies.forEach { dependency ->
+                            val dependencyNode = dependenciesNode.appendNode("dependency")
+                            dependencyNode.appendNode("groupId", dependency.group)
+                            dependencyNode.appendNode("artifactId", dependency.name)
+                            dependencyNode.appendNode("version", dependency.version)
+                            dependencyNode.appendNode("scope", "runtime")
+                        }
+                    }
+                }
+
+            }
+        }
     }
 }
 

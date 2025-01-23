@@ -51,4 +51,10 @@ public class VideoPlayer {
             player.setVolume(1f);
         }
     }
+
+    public void setVolume(float volumeLevel) {
+        if (player != null) {
+            player.setVolume(volumeLevel);
+        }
+    }
 }

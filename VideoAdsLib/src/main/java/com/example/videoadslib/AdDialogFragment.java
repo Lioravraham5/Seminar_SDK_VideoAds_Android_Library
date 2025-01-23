@@ -42,6 +42,8 @@ public class AdDialogFragment extends DialogFragment {
     // callback for the ad closed event for the host app:
     private AdClosedCallback adClosedCallback;
     private int closeButtonDelay = 5000; // default 5 seconds
+    private boolean muteAd = false;
+
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -143,6 +145,12 @@ public class AdDialogFragment extends DialogFragment {
                     openAdvertiserLink(currentAd.getAdvertiserLink());
                 }
             });
+
+            // Mute the video if required
+            if (muteAd) {
+                muteVideo();
+            }
+
 
             // Show the close button after a delay
             showCloseButtonWithDelay();
@@ -266,8 +274,36 @@ public class AdDialogFragment extends DialogFragment {
         this.closeButtonDelay = delayMillis;
     }
 
-    // Method to set the callback listener
     public void setAdClosedCallback(AdClosedCallback adClosedCallback) {
         this.adClosedCallback = adClosedCallback;
+    }
+
+    public AdDialogFragment setMuteAd(boolean muteAd) {
+        this.muteAd = muteAd;
+        return this;
+    }
+
+    public void muteVideo() {
+        if (videoPlayer != null) {
+            videoPlayer.mute();
+            Log.d("AdDialogFragment", "Video muted");
+        }
+        else {
+            Log.d("AdDialogFragment", "muteVideo() called but videoPlayer is null");
+        }
+    }
+
+    public void unMuteVideo() {
+        if (videoPlayer != null) {
+            videoPlayer.unMute();
+            Log.d("AdDialogFragment", "Video unmuted");
+        }
+    }
+
+    public void setVolume(float volumeLevel) {
+        if (videoPlayer != null && videoPlayer.getPlayer() != null) {
+            videoPlayer.getPlayer().setVolume(volumeLevel);
+            Log.d("AdDialogFragment", "Volume set to " + volumeLevel);
+        }
     }
 }
