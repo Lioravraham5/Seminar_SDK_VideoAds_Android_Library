@@ -4,7 +4,7 @@ VideoAdsLib is a easy-to-use library designed for integrating video advertisemen
 ## Architecture Overview
 The project is designed as a comprehensive video advertisement platform consisting of four main components: VideoAdsLib, API Flask Server, MongoDB Database, and an Application. Together, these components provide the infrastructure for uploading, managing, and delivering video advertisements to client applications.
 
-add a scratch
+<img src="https://github.com/user-attachments/assets/7b7afdbb-72dd-4428-b0f8-9f3038891d4b" alt="Architecture Overview" style="width: 75%; height: 75%;">
 
 ### VideoAdsLib (Android Library)
 - Provides a ready-to-use SDK for developers to integrate video advertisements into their apps.
@@ -22,8 +22,8 @@ Acts as the backend, exposing RESTful endpoints to manage advertisements.
 - **Delete Ad:** Removes an ad by ID
 
 ### Database (MongoDB)
-Ads Collection: Stores advertisement details such as video links, advertiser links, prices, and tracking metrics (clicks/impressions).
-Packages Collection: The Packages Collection stores all ad events for video ads shown in applications using the SDK.
+- **Ads Collection:** Stores advertisement details such as video links, advertiser links, prices, and tracking metrics (clicks/impressions).
+- **Packages Collection:** The Packages Collection stores all ad events for video ads shown in applications using the SDK.
 
 ### Application
 The application integrates the VideoAdsLib SDK to display video advertisements to users. It fetches ads from the backend, handles ad display within the app, and tracks user interactions such as impressions and clicks.
