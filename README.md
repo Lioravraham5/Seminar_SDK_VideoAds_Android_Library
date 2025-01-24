@@ -28,4 +28,41 @@ Acts as the backend, exposing RESTful endpoints to manage advertisements.
 ### Application
 The application integrates the VideoAdsLib SDK to display video advertisements to users. It fetches ads from the backend, handles ad display within the app, and tracks user interactions such as impressions and clicks.
 
+## VideoAdsLib
+### Features
+- **Ad Fetching:** The library fetches video ads from a remote server using a <ins>Retrofit API</ins>.
+- **Ad Display:** Video ads are shown in a full-screen dialog using <ins>ExoPlayer</ins> for playback.
+- **Event Tracking:** The library tracks key user interactions, like ad views and clicks, and sends this data back to the server via Retrofit for analytics
+- **Video Ad Customization:** Developers can configure the ad's behavior, such as the delay before showing the close button and whether the ad should be muted by default through customizable    parameters when initializing the ad.
+
+### Setup
+Step 1. Add it in your root `build.gradle` at the end of repositories:
+```
+allprojects {
+    repositories {
+        // other repositories
+        maven { url = uri("https://jitpack.io" )}
+    }
+}
+```
+
+Step 2. Add the dependency:
+```
+dependencies {
+  implementation("com.github.Lioravraham5:Seminar_SDK_VideoAds_Android_Library:1.0.0")
+}
+```
+
+Step 3: In the `build.gradle` (app-level) file, set the `compileSdk` to 35:
+        
+Updating to compileSdk 35 is required because several dependencies (like androidx.activity and media3-exoplayer) need it to compile. Using
+```
+android {
+    compileSdk = 35
+}
+```
+
+
+
+
 [![](https://jitpack.io/v/Lioravraham5/Seminar_SDK_VideoAds_Android_Library.svg)](https://jitpack.io/#Lioravraham5/Seminar_SDK_VideoAds_Android_Library)
