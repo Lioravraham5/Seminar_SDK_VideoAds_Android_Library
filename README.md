@@ -94,7 +94,30 @@ videoAdsManager.startVideoAd(fragmentManager, muteAd); // Pass 'true' to mute ad
  - `fragmentManager`: The `FragmentManager` instance used to display the ad as a dialog.
  - `muteAd`: A boolean flag to indicate whether the ad should play muted
      - `true`: The ad will be muted.
-     - `false`: The ad will play with sound.       
+     - `false`: The ad will play with sound.
+
+#### Example code:
+```
+// Initialize VideoAdsManager
+VideoAdsManager videoAdsManager = new VideoAdsManager("com.example.myapp");
+
+// Set close button delay
+videoAdsManager.setCloseButtonDelay(6000); // 6 seconds
+
+// Set callback for when the ad is closed
+videoAdsManager.setAdClosedCallback(() -> {
+    Log.d("AdCallback", "Ad was closed");
+});
+
+// Display the ad
+videoAdsManager.startVideoAd(getSupportFragmentManager(), true); // Mute ad
+```
+#### Screenshots:
+
+<div style="display: flex; justify-content: space-between; gap: 10px;">
+  <img src="https://github.com/user-attachments/assets/760a1c9b-bba3-4236-8150-a6c6f6da8458" alt="Image 1" style="width: 15%; height: 15%;">
+  <img src="https://github.com/user-attachments/assets/bcb67c55-944e-49dd-8afc-b6b29b82abbf" alt="Image 2" style="width: 15%; height: 15%;">
+</div>
 
 ## License
 ```
