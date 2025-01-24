@@ -115,8 +115,8 @@ videoAdsManager.startVideoAd(getSupportFragmentManager(), true); // Mute ad
 #### Screenshots:
 
 <div style="display: flex; justify-content: space-between; gap: 10px;">
-  <img src="https://github.com/user-attachments/assets/760a1c9b-bba3-4236-8150-a6c6f6da8458" alt="Image 1" style="width: 15%; height: 15%;">
-  <img src="https://github.com/user-attachments/assets/bcb67c55-944e-49dd-8afc-b6b29b82abbf" alt="Image 2" style="width: 15%; height: 15%;">
+  <img src="https://github.com/user-attachments/assets/760a1c9b-bba3-4236-8150-a6c6f6da8458" alt="Image 1" style="width: 25%; height: 25%;">
+  <img src="https://github.com/user-attachments/assets/bcb67c55-944e-49dd-8afc-b6b29b82abbf" alt="Image 2" style="width: 25%; height: 25%;">
 </div>
 
 ## License
