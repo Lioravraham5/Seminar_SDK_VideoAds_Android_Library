@@ -39,6 +39,7 @@ The application integrates the VideoAdsLib SDK to display video advertisements t
 - **Ad Display:** Video ads are shown in a full-screen dialog using <ins>ExoPlayer</ins> for playback.
 - **Event Tracking:** The library tracks key user interactions, like ad views and clicks, and sends this data back to the server via Retrofit for analytics
 - **Video Ad Customization:** Developers can configure the ad's behavior, such as the delay before showing the close button and whether the ad should be muted by default through customizable    parameters when initializing the ad.
+- **Advertiser Website Redirection:** The library provides functionality to redirect users to the advertiser's website when the video or the related button is pressed.
 
 ### Setup
 Step 1. Add it in your root `build.gradle` at the end of repositories:
