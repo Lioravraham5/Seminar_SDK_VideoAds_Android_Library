@@ -62,7 +62,34 @@ android {
 }
 ```
 
+### Usage:
 
+1) **Initialize VideoAdsManager:**
+```
+VideoAdsManager videoAdsManager = new VideoAdsManager("your.package.name");
+```
+
+2) **Set Close Button Delay (Optional):** default - 5 seconds delay
+```
+videoAdsManager.setCloseButtonDelay(6000); // 6-seconds delay
+```
+
+3) **Set Ad Completion Listener (Optional):** Set a listener to handle Ad completion
+```
+videoAdsManager.setAdClosedCallback(() -> {
+    // Your code when the ad is closed
+    
+});
+```
+
+4) **Display an Ad:**
+```
+videoAdsManager.startVideoAd(fragmentManager, muteAd); // Pass 'true' to mute ads or false to unmute ad
+```
+ - `fragmentManager`: The `FragmentManager` instance used to display the ad as a dialog.
+ - `muteAd`: A boolean flag to indicate whether the ad should play muted
+     - `true`: The ad will be muted.
+     - `false`: The ad will play with sound.       
 
 
 [![](https://jitpack.io/v/Lioravraham5/Seminar_SDK_VideoAds_Android_Library.svg)](https://jitpack.io/#Lioravraham5/Seminar_SDK_VideoAds_Android_Library)
