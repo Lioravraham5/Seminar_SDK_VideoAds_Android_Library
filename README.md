@@ -1,3 +1,8 @@
+
+![GitHub](https://img.shields.io/github/license/Lioravraham5/Seminar_SDK_VideoAds_Android_Library)
+[![](https://jitpack.io/v/Lioravraham5/Seminar_SDK_VideoAds_Android_Library.svg)](https://jitpack.io/#Lioravraham5/Seminar_SDK_VideoAds_Android_Library)
+[![API](https://img.shields.io/badge/API-26%2B-green.svg?style=flat)]()
+
 # VideoAdsLib Library
 VideoAdsLib is a easy-to-use library designed for integrating video advertisements into Android applications. It simplifies the process of configuring, displaying, and managing video ads
 
@@ -91,5 +96,20 @@ videoAdsManager.startVideoAd(fragmentManager, muteAd); // Pass 'true' to mute ad
      - `true`: The ad will be muted.
      - `false`: The ad will play with sound.       
 
+## License
+```
+Copyright 2025 Lior Avraham
 
-[![](https://jitpack.io/v/Lioravraham5/Seminar_SDK_VideoAds_Android_Library.svg)](https://jitpack.io/#Lioravraham5/Seminar_SDK_VideoAds_Android_Library)
+Licensed under the Apache License, Version 2.0 (the "License");
+you may not use this file except in compliance with the License.
+You may obtain a copy of the License at
+
+http://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing, software
+distributed under the License is distributed on an "AS IS" BASIS,
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+See the License for the specific language governing permissions and
+limitations under the License.
+```
+
