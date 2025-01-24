@@ -26,6 +26,8 @@ Acts as the backend, exposing RESTful endpoints to manage advertisements.
 - **Fetch All Ads:** Lists all stored ads.
 - **Delete Ad:** Removes an ad by ID
 
+You can find more details and documentation on the API in the [Seminar_SDK_Flask_API](https://github.com/Lioravraham5/Seminar_SDK_Flask_API)
+
 ### Database (MongoDB)
 - **Ads Collection:** Stores advertisement details such as video links, advertiser links, prices, and tracking metrics (clicks/impressions).
 - **Packages Collection:** The Packages Collection stores all ad events for video ads shown in applications using the SDK.
