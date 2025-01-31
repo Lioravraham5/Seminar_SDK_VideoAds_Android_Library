@@ -122,6 +122,9 @@ videoAdsManager.startVideoAd(getSupportFragmentManager(), true); // Mute ad
   <img src="https://github.com/user-attachments/assets/bcb67c55-944e-49dd-8afc-b6b29b82abbf" alt="Image 2" style="width: 25%; height: 25%;">
 </div>
 
+#### Example Application Video: 
+[Test application](https://firebasestorage.googleapis.com/v0/b/videosads-11664.firebasestorage.app/o/examplesVideosApps%2Fseminar_sdk.mp4?alt=media&token=cccb91a6-9bed-4631-bfc4-f9f203f6537b)
+
 ## License
 ```
 Copyright 2025 Lior Avraham
