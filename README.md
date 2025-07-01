@@ -6,6 +6,8 @@
 # VideoAdsLib Library
 VideoAdsLib is a easy-to-use library designed for integrating video advertisements into Android applications. It simplifies the process of configuring, displaying, and managing video ads
 
+https://github.com/user-attachments/assets/3aa4099d-cd15-4d77-8c98-41010d3bc279
+
 ## Architecture Overview
 The project is designed as a comprehensive video advertisement platform consisting of four main components: VideoAdsLib, API Flask Server, MongoDB Database, and an Application. Together, these components provide the infrastructure for uploading, managing, and delivering video advertisements to client applications.
 
@@ -121,9 +123,6 @@ videoAdsManager.startVideoAd(getSupportFragmentManager(), true); // Mute ad
   <img src="https://github.com/user-attachments/assets/760a1c9b-bba3-4236-8150-a6c6f6da8458" alt="Image 1" style="width: 25%; height: 25%;">
   <img src="https://github.com/user-attachments/assets/bcb67c55-944e-49dd-8afc-b6b29b82abbf" alt="Image 2" style="width: 25%; height: 25%;">
 </div>
-
-#### Example Application Video: 
-[Test application](https://firebasestorage.googleapis.com/v0/b/videosads-11664.firebasestorage.app/o/examplesVideosApps%2Fseminar_sdk.mp4?alt=media&token=cccb91a6-9bed-4631-bfc4-f9f203f6537b)
 
 ## License
 ```
